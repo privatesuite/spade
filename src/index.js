@@ -1,10 +1,18 @@
 const axios = require("axios").default;
 
+let proxy = "";
+
 module.exports = {
 	
+	setProxy (_proxy) {
+
+		proxy = _proxy;
+
+	},
+
 	async getLocations (location) {
 
-		return (await axios.post("https://bandcamp.com/api/location/1/geoname_search", {
+		return (await axios.post(proxy + "https://bandcamp.com/api/location/1/geoname_search", {
 		
 			q: location,
 			
@@ -22,7 +30,7 @@ module.exports = {
 
 		async function getPage (page) {
 
-			return (await axios.post("https://bandcamp.com/api/hub/2/dig_deeper", {
+			return (await axios.post(proxy + "https://bandcamp.com/api/hub/2/dig_deeper", {
 		
 				filters: {
 					
