@@ -23,7 +23,7 @@ module.exports = {
 
 	},
 
-	async getRecentTracks (tracks, location) {
+	async getRecentAlbums (albums, location) {
 
 		var _ = [];
 		var page = 1;
@@ -47,13 +47,13 @@ module.exports = {
 
 		}
 
-		while (_.length < tracks) {
+		while (_.length < albums) {
 
 			_.push(...(await getPage(page++)).items);
 
 		}
 
-		_ = _.slice(0, tracks);
+		_ = _.slice(0, albums);
 
 		return _;
 		

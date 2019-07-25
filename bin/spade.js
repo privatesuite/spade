@@ -47,7 +47,7 @@ if (args._[0] && isNumber(args._[0])) {
 
 		let loc = await spade.getLocations(args.location || 0);
 
-		for (const album of await spade.getRecentTracks(args._[0], args.location ? (loc)[0].id : undefined)) {
+		for (const album of await spade.getRecentAlbums(args._[0], args.location ? (loc)[0].id : undefined)) {
 
 			console.log(`\n\n${"─".repeat(50)}\n\n`);
 
