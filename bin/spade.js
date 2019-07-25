@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 
-const _chalk = require("chalk").default;
 const spade = require("../src");
+const _chalk = require("chalk").default;
+const minimist = require("minimist");
+
 
 function info (text) {
 
@@ -15,11 +17,11 @@ function isNumber (value) {
 
 }
 
-var args = process.argv.slice(2);
+var args = minimist(process.argv.slice(2));
 
 let chalk;
 
-if (args.indexOf("colorless") !== -1) {
+if (args.colorless) {
 
 	chalk = new _chalk.constructor({level: 0});
 
@@ -29,7 +31,7 @@ if (args.indexOf("colorless") !== -1) {
 
 }
 
-if (args[0] && isNumber(args[0])) {
+if (args._[0] && isNumber(args._[0])) {
 
 	(async () => {
 
@@ -43,7 +45,9 @@ if (args[0] && isNumber(args[0])) {
 		log(chalk.cyan.bold.underline("Spade dug up these albums:"));
 		// console.log("");
 
-		for (const album of await spade(args[0])) {
+		let loc = await spade.getLocations(args.location || 0);
+
+		for (const album of await spade.getRecentTracks(args._[0], args.location ? (loc)[0].id : undefined)) {
 
 			console.log(`\n\n${"─".repeat(50)}\n\n`);
 
@@ -52,6 +56,7 @@ if (args[0] && isNumber(args[0])) {
 
 			log(`${chalk.bold.cyan("URL")} ${album.tralbum_url}`);
 			log(`${chalk.bold.cyan("Genre")} ${album.genre}`);
+			if (args.location) log(`${chalk.bold.cyan("Location")} ${loc[0].fullname}`);
 			log(`${chalk.bold.cyan("Featured Track")} ${album.featured_track_title}`);
 
 		}
