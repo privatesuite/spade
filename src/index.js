@@ -100,7 +100,10 @@ module.exports = {
 
 		while (_.length < albums) {
 
-			_.push(...(await getPage(page++)).items.map(convert));
+			let p = await getPage(page);
+			if (p.items.length === 0) return _;
+			_.push(...(p).items.map(convert));
+			page++;
 
 		}
 
