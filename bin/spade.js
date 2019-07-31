@@ -4,7 +4,6 @@ const spade = require("../src");
 const _chalk = require("chalk").default;
 const minimist = require("minimist");
 
-
 function info (text) {
 
 	console.log(`INFO ${chalk.cyan(text)}`);
@@ -46,18 +45,23 @@ if (args._[0] && isNumber(args._[0])) {
 		// console.log("");
 
 		let loc = await spade.getLocations(args.location || 0);
+		let recentAlbums = await spade.getRecentAlbums(args._[0], args.location ? (loc)[0].id : undefined);
 
-		for (const album of await spade.getRecentAlbums(args._[0], args.location ? (loc)[0].id : undefined)) {
+		if (args.sort === "newest") recentAlbums = recentAlbums.sort((a, b) => b.release_date - a.release_date);
+		if (args.sort === "oldest") recentAlbums = recentAlbums.sort((a, b) => a.release_date - b.release_date);
+
+		for (const album of recentAlbums) {
 
 			console.log(`\n\n${"─".repeat(50)}\n\n`);
 
-			log(`${chalk.bold(album.title)} by ${album.band_name}`);
+			log(`${chalk.bold(album.title)} by ${album.artist}`);
 			log(`\n`);
 
-			log(`${chalk.bold.cyan("URL")} ${album.tralbum_url}`);
+			log(`${chalk.bold.cyan("URL")} ${album.url}`);
 			log(`${chalk.bold.cyan("Genre")} ${album.genre}`);
-			if (args.location) log(`${chalk.bold.cyan("Location")} ${loc[0].fullname}`);
-			log(`${chalk.bold.cyan("Featured Track")} ${album.featured_track_title}`);
+			log(`${chalk.bold.cyan("Location")} ${album.location}`);
+			log(`${chalk.bold.cyan("Release Date")} ${album.release_date.toUTCString()}`);
+			log(`${chalk.bold.cyan("Featured Track")} ${album.featured_track.title}`);
 
 		}
 
