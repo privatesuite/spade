@@ -30,46 +30,10 @@ module.exports = {
 
 	},
 
-	// async getRecentAlbums (albums, location) {
-
-	// 	var _ = [];
-	// 	var page = 1;
-
-	// 	async function getPage (page) {
-
-	// 		return (await axios.post(proxy + "https://bandcamp.com/api/hub/2/dig_deeper", {
-		
-	// 			filters: {
-					
-	// 				format: "all",
-	// 				location: parseInt(location || "0"),
-	// 				sort: "date",
-	// 				tags: ["vaporwave"]
-				
-	// 			},
-				
-	// 			page
-		
-	// 		})).data;
-
-	// 	}
-
-	// 	while (_.length < albums) {
-
-	// 		_.push(...(await getPage(page++)).items);
-
-	// 	}
-
-	// 	_ = _.slice(0, albums);
-
-	// 	return _;
-		
-	// }
-
 	async getRecentAlbums (albums, location = 0) {
 
-		var _ = [];
-		var page = 0;
+		let _ = [];
+		let page = 0;
 
 		function convert (_) {
 
@@ -111,6 +75,36 @@ module.exports = {
 
 		return _;
 		
+	},
+
+	async getAlbum (url) {
+
+		let p = (await axios.get(url)).data;
+
+		let raw = (new Function("return " + p.slice(p.indexOf("var TralbumData =") + "var TralbumData =".length, p.indexOf("if ( window.FacebookData )") - 1).trim().slice(0, -1)))();
+
+		return {
+
+			title: raw.current.title,
+			artist: raw.artist,
+			
+			description: raw.current.about,
+			release_date: new Date(raw.current.publish_date),
+			minimum_price: raw.current.minimum_price,
+
+			tracks: raw.trackinfo.map(_ => {
+
+				return {
+
+					title: _.title,
+					file: _.file
+
+				}
+
+			})
+
+		}
+
 	}
 
 }
