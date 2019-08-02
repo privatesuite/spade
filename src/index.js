@@ -101,7 +101,9 @@ module.exports = {
 				album,
 
 				title: _.title,
-				file: _.file
+				file: _.file,
+				isFeatured: _.id === album.featured_track_id,
+				duration: _.duration
 
 			}
 
