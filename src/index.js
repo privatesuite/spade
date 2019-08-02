@@ -83,27 +83,29 @@ module.exports = {
 
 		let raw = (new Function("return " + p.slice(p.indexOf("var TralbumData =") + "var TralbumData =".length, p.indexOf("if ( window.FacebookData )") - 1).trim().slice(0, -1)))();
 
-		return {
+		var album = {
 
 			title: raw.current.title,
 			artist: raw.artist,
 			
 			description: raw.current.about,
 			release_date: new Date(raw.current.publish_date),
-			minimum_price: raw.current.minimum_price,
-
-			tracks: raw.trackinfo.map(_ => {
-
-				return {
-
-					title: _.title,
-					file: _.file
-
-				}
-
-			})
+			minimum_price: raw.current.minimum_price
 
 		}
+
+		album.tracks = raw.trackinfo.map(_ => {
+
+			return {
+
+				album,
+
+				title: _.title,
+				file: _.file
+
+			}
+
+		})
 
 	}
 
