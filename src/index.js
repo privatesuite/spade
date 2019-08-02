@@ -105,7 +105,9 @@ module.exports = {
 
 			}
 
-		})
+		});
+
+		return album;
 
 	}
 
