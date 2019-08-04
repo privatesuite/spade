@@ -2,7 +2,9 @@ const spade = require("../src");
 
 async function main () {
 
-	console.log(await spade.getAlbum("https://australmusic.bandcamp.com/album/reflect"));
+	const testAlbum = await spade.getAlbum("https://xxyyxx.bandcamp.com/album/xxyyxx");
+
+	console.log(testAlbum.tracks);
 
 }
 

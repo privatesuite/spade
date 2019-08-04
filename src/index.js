@@ -85,6 +85,7 @@ module.exports = {
 
 		var album = {
 
+			url,
 			title: raw.current.title,
 			artist: raw.artist,
 			
@@ -94,12 +95,15 @@ module.exports = {
 
 		}
 
+		let i = 0;
+
 		album.tracks = raw.trackinfo.map(_ => {
 
 			return {
 
 				album,
 
+				position: i++,
 				title: _.title,
 				file: _.file,
 				isFeatured: _.id === album.featured_track_id,
