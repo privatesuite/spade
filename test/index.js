@@ -1,10 +1,13 @@
 const spade = require("../src");
+const assert = require("assert");
 
 async function main () {
 
-	const testAlbum = await spade.getAlbum("https://xxyyxx.bandcamp.com/album/xxyyxx");
+	const xxyyxx = await spade.getAlbum("https://xxyyxx.bandcamp.com/album/xxyyxx");
 
-	console.log(testAlbum.tracks);
+	assert(xxyyxx.tracks[0].title === "About You", "Spade getAlbum");
+
+	console.log("Tests Passed");
 
 }
 

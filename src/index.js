@@ -1,5 +1,4 @@
-let axios;
-if (typeof require !== "undefined") axios = require("axios").default;
+if (typeof require !== "undefined") var axios = require("axios").default;
 
 let proxy = "";
 
@@ -30,7 +29,7 @@ module.exports = {
 
 	},
 
-	async getRecentAlbums (albums, location = 0) {
+	async getRecentAlbums (albums, location = 0, genre = "electronic", subgenre = "vaporwave") {
 
 		let _ = [];
 		let page = 0;
@@ -58,7 +57,7 @@ module.exports = {
 
 		async function getPage (page) {
 
-			return (await axios.get(proxy + `https://bandcamp.com/api/discover/3/get_web?g=electronic&s=new&p=${page}&gn=${location}&f=all&t=vaporwave&lo=true&lo_action_url=https%3A%2F%2Fbandcamp.com`)).data;
+			return (await axios.get(proxy + `https://bandcamp.com/api/discover/3/get_web?g=${genre}&s=new&p=${page}&gn=${location}&f=all&t=${subgenre}&lo=true&lo_action_url=https%3A%2F%2Fbandcamp.com`)).data;
 
 		}
 
