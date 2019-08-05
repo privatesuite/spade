@@ -8,7 +8,7 @@ function capitalizeFirstLetter (string) {
 
 }
 
-module.exports = {
+const Spade = module.exports = {
 	
 	setProxy (_proxy) {
 
