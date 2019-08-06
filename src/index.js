@@ -118,4 +118,4 @@ const Spade = {
 
 }
 
-if (module) module.exports = Spade;
+if (typeof module !== "undefined") module.exports = Spade;
