@@ -78,7 +78,7 @@ const Spade = {
 
 	async getAlbum (url) {
 
-		let p = (await axios.get(url)).data;
+		let p = (await axios.get(proxy + url)).data;
 
 		let raw = (new Function("return " + p.slice(p.indexOf("var TralbumData =") + "var TralbumData =".length, p.indexOf("if ( window.FacebookData )") - 1).trim().slice(0, -1)))();
 
